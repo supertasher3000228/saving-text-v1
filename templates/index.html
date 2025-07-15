@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Накопитель текста</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+        
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn {
+            background-color: #007BFF;
+            color: white;
+        }
+        
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .clear-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .clear-btn:hover {
+            background-color: #c82333;
+        }
+        
+        .output-section {
+            margin-top: 30px;
+        }
+        
+        .saved-texts {
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            padding: 20px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .text-item {
+            background-color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #007BFF;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .text-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .empty-message {
+            color: #6c757d;
+            font-style: italic;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .counter {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Накопитель текста</h1>
+        
+        <div class="input-section">
+            <form method="POST">
+                <label for="user_input">Введите текст:</label>
+                <input type="text" id="user_input" name="user_input" placeholder="Введите ваш текст здесь..." required>
+                
+                <div class="button-group">
+                    <button type="submit" class="submit-btn">Добавить текст</button>
+                    <a href="/clear" class="clear-btn" style="text-decoration: none; display: inline-block; text-align: center;">Очистить все</a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="output-section">
+            <label>Сохраненные тексты:</label>
+            {% if saved_texts %}
+                <div class="counter">Всего записей: {{ saved_texts|length }}</div>
+            {% endif %}
+            
+            <div class="saved-texts">
+                {% if saved_texts %}
+                    {% for text in saved_texts %}
+                        <div class="text-item">{{ text }}</div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-message">
+                        Пока нет сохраненных текстов. Введите что-нибудь выше!
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
